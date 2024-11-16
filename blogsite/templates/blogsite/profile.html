@@ -1,0 +1,90 @@
+{% extends "blogsite/base.html" %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<style>
+.profile-img img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.post-card {
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #f8f9fa;
+        transition: transform 0.2s;
+    }
+
+    .post-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .post-card h4 {
+        margin-bottom: 10px;
+        color: #343a40;
+    }
+
+    .post-card p {
+        color: #6c757d;
+    }
+
+    .post-card .btn {
+        margin-right: 5px;
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <div class="profile-img">
+                <img src="{% if user.profile.image %}{{ user.profile.image.url }}{% else %}{% static 'profile_img/default.jpg' %}{% endif %}"
+                    alt="Profile Picture" class="img-thumbnail rounded-circle mb-3">
+            </div>
+        </div>
+        <div class="col-md-8">
+            <h2>Edit Profile</h2>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% if messages %}
+                <div class="alert alert-primary" role="alert">
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                {{ u_form.first_name|as_crispy_field }}
+                {{ u_form.username|as_crispy_field }}
+                {{ p_form.image|as_crispy_field }}
+                {{ p_form.bio|as_crispy_field }}
+                <button type="submit" class="btn btn-primary mt-4">Save Changes</button>
+            </form>
+            <div class="posts-section">
+                <h3 class="mb-4">Manage Your Posts</h3>
+                <div class="row">
+                    {% for post in user_posts %}
+                    <div class="col-md-6">
+                        <div class="post-card">
+                            <h4>{{ post.title }}</h4>
+                            <p>{{ post.content|truncatewords:20 }}</p>
+                            <a href="{{ post.get_absolute_url }}" class="btn btn-sm btn-primary">View</a>
+                            <a href="{% url 'update_post' post.id %}" class="btn btn-sm btn-warning">Edit</a>
+                            <a href="{% url 'delete_post' post.id %}" class="btn btn-sm btn-danger">Delete</a>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p>No posts to manage.</p>
+                    {% endfor %}
+                </div>
+            </div>     
+        </div>
+    </div>
+</div>
+
+{% endblock %}

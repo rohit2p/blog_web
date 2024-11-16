@@ -1,0 +1,103 @@
+{% extends "blogsite/base.html" %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+<style>
+    .comment {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 15px;
+}
+
+.comment .profile-img img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%; /* Makes the image round */
+    border: 2px solid #ddd;
+}
+
+.comment-body {
+    flex-grow: 1;
+}
+
+.comment-body p {
+    margin: 0;
+}
+
+.comment-body .text-primary {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.comment-body .text-primary:hover {
+    text-decoration: underline;
+}
+
+</style>
+<div class="container">
+    <div class="row">
+        <article class="col-lg-12">
+            <h1>{{ post.title }}</h1>
+            <p>
+                <a href="{% url 'user_profile' post.author.username %}" style="color: black;"><strong>{{ post.author }}</strong></a>
+                | {{ post.created_at|date:"F j, Y" }}
+            </p>
+            <div>
+                <img src="{% if post.image %}{{ post.image.url }}{% else %}{% static 'blogsite/images/default.jpg' %}{% endif %}" alt="Image" class="img-responsive">
+            </div>
+            <p>{{ post.content|safe }}</p>
+        </article>
+    </div>
+
+    <hr>
+    
+    <div class="comments mt-5">
+        <h3 class="mb-4">Comments</h3>
+        {% for comment in comments %}
+            <div class="comment d-flex align-items-center mb-4">
+                <!-- Profile Picture -->
+                <div class="profile-img me-3">
+                    <img src="{% if comment.author.profile.image %}{{ comment.author.profile.image.url }}{% else %}{% static 'profile_img/default.jpg' %}{% endif %}" 
+                         alt="{{ comment.author.username }}" 
+                         class="rounded-circle profile-picture">
+                </div>
+    
+                <!-- Comment Content -->
+                <div class="comment-body">
+                    <p class="mb-1">
+                        <!-- Username -->
+                        <a href="{% url 'user_profile' comment.author.username %}" class="text-primary fw-bold">
+                            {{ comment.author.username }}
+                        </a>
+                        <small class="text-muted"> | {{ comment.created_at|date:"F j, Y, g:i a" }}</small>
+                    </p>
+                    <p>{{ comment.content }}</p>
+                </div>
+            </div>
+        {% empty %}
+            <p>No comments yet. Be the first to comment!</p>
+        {% endfor %}
+    </div>
+    
+    <hr>
+    
+    <!-- Add Comment Form -->
+    {% if user.is_authenticated %}
+        <h5 class="mt-4">Leave a Comment</h5>
+        <form method="POST" class="mt-3">
+            {% csrf_token %}
+            <div class="form-group mb-3">
+                {{ comment_form.content|as_crispy_field }}
+            </div>
+            <button type="submit" class="btn btn-primary">Add Comment</button>
+        </form>
+    {% else %}
+        <p><a href="{% url 'login' %}">Log in</a> to post a comment.</p>
+    {% endif %}     
+</div>
+{% endblock %}
+    

@@ -1,0 +1,20 @@
+{% extends "blogsite/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Update Post</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+    </form>
+</div>
+
+<!-- CKEditor JS -->
+<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+<script>
+    // Initialize CKEditor on the content field
+    CKEDITOR.replace('content');
+</script>
+{% endblock %}
