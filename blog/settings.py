@@ -95,7 +95,7 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.parse(
-        env('DATABASE_URL')
+        env('DATABASE_URL', default='postgresql://postgres:DKhxLagnhzScGUGRhWFKyBsmvXEzYXAj@autorack.proxy.rlwy.net:12574/railway')
     )
 }
 
