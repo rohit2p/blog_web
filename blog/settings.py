@@ -38,8 +38,11 @@ if Environment == 'development':
 else:
     DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['rhyem.up.railway.app']
 
+CSRF_TRUSTED_ORIGINS = ['https://rhyem.up.railway.app']
+
+CSRF_COOKIE_SECURE = True
 
 # Application definition
 
