@@ -2,7 +2,7 @@ boto3==1.9.96
 botocore==1.12.96
 certifi==2018.10.15
 chardet==3.0.4
-Django==2.1
+Django>=4.2,<5.0
 django-crispy-forms==1.7.2
 django-heroku==0.3.1
 django-storages==1.7.1
@@ -18,4 +18,4 @@ s3transfer==0.2.0
 six==1.12.0
 urllib3==1.23
 whitenoise==4.1.2
-dj_database_url==2.3.0
+dj-database-url>=2.3.0
