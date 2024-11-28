@@ -18,24 +18,24 @@ Technology Stack
 
 Installation (For Local Development)
 
-    Clone the repository:
+Clone the repository:
 
-git clone <repository-url>
-cd <project-directory>
+    git clone <repository-url>
+    cd <project-directory>
 
 Create a virtual environment and activate it:
 
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+    python -m venv venv
+    source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 Install dependencies:
 
-pip install -r requirements.txt
+    pip install -r requirements.txt
 
 Apply migrations:
 
-python manage.py makemigrations
-python manage.py migrate
+    python manage.py makemigrations
+    python manage.py migrate
 
 Run the development server:
 
@@ -51,22 +51,23 @@ Usage
 
 Deployment
 
-The website is deployed at: https://rhyem.up.railway.app/
+    The website is deployed at: https://rhyem.up.railway.app/
 Contribution
 
 Contributions are welcome! To contribute:
 
     Fork the repository.
+
     Create a new branch:
 
-git checkout -b feature-branch
-
-Commit your changes:
-
-git commit -m "Add new feature"
-
-Push to the branch:
+    git checkout -b feature-branch
+    
+    Commit your changes:
+    
+    git commit -m "Add new feature"
+    
+    Push to the branch:
 
     git push origin feature-branch
 
-    Submit a pull request.
+Submit a pull request.
